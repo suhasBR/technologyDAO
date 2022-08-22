@@ -118,7 +118,7 @@ function Account() {
       };
 
       const res = await axios.post(
-        "https://technologydao.herokuapp.com/api/v1/cashout/totdp",
+        "http://localhost:5000/api/v1/cashout/totdp",
         body,
         config
       );
@@ -133,7 +133,7 @@ function Account() {
       });
 
       onClose();
-      await getUserDetails(res.data.token);
+      await getUserDetails(token);
     } catch (error) {
       console.log(error);
       let msg = error.message;
@@ -199,7 +199,7 @@ function Account() {
           <div className="my-4 flex flex-row">
             <p className="text-base">TDP token contract : </p>
             <p className="text-base">
-              0xdC8f315456d8a64D2bB4F611cB451C78c309B60B
+            0xA26261e6EB882bcd24eF164e6D066131972C1716
             </p>
           </div>
           <div className="my-4 flex flex-row">

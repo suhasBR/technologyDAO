@@ -12,7 +12,7 @@ export const getUserDetails = async (token) => {
       }
 
       const res = await axios.get(
-        `https://technologydao.herokuapp.com/api/v1/users/getUserDetails`
+        `http://localhost:5000/api/v1/users/getUserDetails`
       );
 
       const loader = {

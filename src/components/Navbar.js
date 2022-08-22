@@ -78,7 +78,7 @@ function Navbar({ openDialog, tab }) {
       }
 
       const res = await axios.get(
-        `https://technologydao.herokuapp.com/api/v1/users/upgradeToPro`
+        `http://localhost:5000/api/v1/users/upgradeToPro`
       );
 
       await getUserDetails(token);
@@ -155,7 +155,7 @@ function Navbar({ openDialog, tab }) {
         console.log(body);
 
         const res = await axios.post(
-          "https://technologydao.herokuapp.com/api/v1/users/login",
+          "http://localhost:5000/api/v1/users/login",
           body,
           config
         );
@@ -230,7 +230,7 @@ function Navbar({ openDialog, tab }) {
           console.log(body);
 
           const res = await axios.post(
-            "https://technologydao.herokuapp.com/api/v1/users/register",
+            "http://localhost:5000/api/v1/users/register",
             body,
             config
           );

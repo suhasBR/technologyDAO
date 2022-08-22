@@ -20,7 +20,7 @@ function Dashboard() {
           axios.defaults.headers.common["x-auth-token"] = token;
         }
         const res = await axios.get(
-          "https://technologydao.herokuapp.com/api/v1/articles/getArticlesByOwner"
+          "http://localhost:5000/api/v1/articles/getArticlesByOwner"
         );
         console.log(res.data);
         updateArticles(res.data.articles);

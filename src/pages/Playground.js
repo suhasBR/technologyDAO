@@ -178,7 +178,7 @@ function Playground() {
       };
       console.log(body);
       const res = await axios.post(
-        "https://technologydao.herokuapp.com/api/v1/write/prompt",
+        "http://localhost:5000/api/v1/write/prompt",
         body,
         config
       );
@@ -256,7 +256,7 @@ function Playground() {
         };
 
         const res = await axios.post(
-          "https://technologydao.herokuapp.com/api/v1/articles/create",
+          "http://localhost:5000/api/v1/articles/create",
           body,
           config
         );
@@ -282,7 +282,7 @@ function Playground() {
         };
 
         const res = await axios.patch(
-          "https://technologydao.herokuapp.com/api/v1/articles/update",
+          "http://localhost:5000/api/v1/articles/update",
           body,
           config
         );
@@ -370,7 +370,7 @@ function Playground() {
   //       };
 
   //       const res = await axios.post(
-  //         "https://technologydao.herokuapp.com/api/v1/articles/createPaid",
+  //         "http://localhost:5000/api/v1/articles/createPaid",
   //         body,
   //         config
   //       );
@@ -397,7 +397,7 @@ function Playground() {
   //       };
 
   //       const res = await axios.post(
-  //         "https://technologydao.herokuapp.com/api/v1/articles/updatePaid",
+  //         "http://localhost:5000/api/v1/articles/updatePaid",
   //         body,
   //         config
   //       );
@@ -484,7 +484,7 @@ function Playground() {
         };
 
         const res = await axios.post(
-          "https://technologydao.herokuapp.com/api/v1/articles/create",
+          "http://localhost:5000/api/v1/articles/create",
           body,
           config
         );
@@ -513,7 +513,7 @@ function Playground() {
         };
 
         const res = await axios.patch(
-          "https://technologydao.herokuapp.com/api/v1/articles/update",
+          "http://localhost:5000/api/v1/articles/update",
           body,
           config
         );
@@ -527,6 +527,7 @@ function Playground() {
           isClosable: true,
         });
       }
+      navigate("/dashboard");
       setWaiting(false);
     } catch (error) {
       setWaiting(false);

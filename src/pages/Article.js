@@ -59,7 +59,7 @@ function Article() {
         // console.log(storyID);
 
         const res = await axios.get(
-          `https://technologydao.herokuapp.com/api/v1/articles/getArticlesById/${storyID}`
+          `http://localhost:5000/api/v1/articles/getArticlesById/${storyID}`
         );
         console.log(res.data.article);
         updateArticle(res.data.article);
@@ -137,7 +137,7 @@ function Article() {
       };
 
       const res = await axios.post(
-        "https://technologydao.herokuapp.com/api/v1/articles/upvote",
+        "http://localhost:5000/api/v1/articles/upvote",
         body,
         config
       );
@@ -204,7 +204,7 @@ function Article() {
       };
 
       const res = await axios.post(
-        "https://technologydao.herokuapp.com/api/v1/articles/boostArticle",
+        "http://localhost:5000/api/v1/articles/boostArticle",
         body,
         config
       );
