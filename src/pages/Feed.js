@@ -45,9 +45,6 @@ function Feed() {
 
   const handleLogin = () => {
     //send gtag event for clicking
-    window.gtag("event", "joinnowclicked", {
-      send_to: "AW-10953385751/gBvbCO6q-tQDEJfO_eYo",
-    });
     console.log(showLogin);
     changeShowLogin(!showLogin);
   };

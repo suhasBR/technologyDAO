@@ -124,10 +124,6 @@ function Navbar({ openDialog, tab }) {
   //       window.location = url;
   //     }
   //   };
-  //   gtag('event', 'conversion', {
-  //       'send_to': 'AW-10953385751/tFMcCOzFydcDEJfO_eYo',
-  //       'event_callback': callback
-  //   });
   //   return false;
   // }
 
@@ -234,11 +230,7 @@ function Navbar({ openDialog, tab }) {
             body,
             config
           );
-
-          //conversion update for campaign
-          window.gtag("event", "conversion", {
-            send_to: "AW-10953385751/gBvbCO6q-tQDEJfO_eYo",
-          });
+          
           //store token and user details
 
           await getUserDetails(res.data.token);
