@@ -117,16 +117,6 @@ function Navbar({ openDialog, tab }) {
     }
   }, [openDialog]);
 
-  //conversion tracking
-  // function gtag_report_conversion(url) {
-  //   var callback = function () {
-  //     if (typeof(url) != 'undefined') {
-  //       window.location = url;
-  //     }
-  //   };
-  //   return false;
-  // }
-
   const formik = useFormik({
     initialValues: {
       email: "",

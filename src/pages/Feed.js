@@ -44,7 +44,6 @@ function Feed() {
   }, []);
 
   const handleLogin = () => {
-    //send gtag event for clicking
     console.log(showLogin);
     changeShowLogin(!showLogin);
   };
