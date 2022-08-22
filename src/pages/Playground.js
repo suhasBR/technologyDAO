@@ -17,11 +17,10 @@ import {
 import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { Stat, StatLabel, StatNumber } from "@chakra-ui/react";
-import {  updateTokens } from "../reducers/user.js";
+import { updateTokens } from "../reducers/user.js";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import Wallet from "../components/Wallet";
 import { getUserDetails } from "../actions/loadUser";
-
 
 function Playground() {
   let [value, setValue] = useState("");
@@ -31,6 +30,8 @@ function Playground() {
   const [fPenalty, changeFPenalty] = useState(1);
   const [pPenalty, changePPenalty] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [waiting, setWaiting] = useState(false);
+  const [waitingSave, setWaitingSave] = useState(false);
   const [title, changeTitle] = useState("");
   const [description, changeDescription] = useState("");
   const [wordCount, changeWordCount] = useState("0");
@@ -184,8 +185,6 @@ function Playground() {
 
       console.log(res.data);
 
-
-
       const tokens = res.data.aiPoints;
 
       console.log(tokens);
@@ -214,7 +213,6 @@ function Playground() {
   };
 
   const draft = async () => {
-
     if (!title) {
       return toast({
         position: "top",
@@ -236,6 +234,7 @@ function Playground() {
       });
     }
     try {
+      setWaitingSave(true);
       if (token) {
         axios.defaults.headers.common["x-auth-token"] = token;
       }
@@ -253,7 +252,7 @@ function Playground() {
           content: value,
           wordCount,
           authorEmail: userEmail,
-          published: false
+          published: false,
         };
 
         const res = await axios.post(
@@ -279,7 +278,7 @@ function Playground() {
           description,
           content: value,
           wordCount,
-          published: false
+          published: false,
         };
 
         const res = await axios.patch(
@@ -297,7 +296,9 @@ function Playground() {
           isClosable: true,
         });
       }
+      setWaitingSave(false);
     } catch (error) {
+      setWaitingSave(false)
       console.log(error);
       let msg = error.message;
       if (error.response && error.response.data) {
@@ -427,7 +428,6 @@ function Playground() {
   //   }
   // };
 
-
   const publish = async () => {
     if (!title) {
       return toast({
@@ -440,7 +440,7 @@ function Playground() {
       });
     }
 
-    if(!value){
+    if (!value) {
       return toast({
         position: "top",
         title: "Content is empty !",
@@ -461,6 +461,7 @@ function Playground() {
       });
     }
     try {
+      setWaiting(true);
       if (token) {
         axios.defaults.headers.common["x-auth-token"] = token;
       }
@@ -479,7 +480,7 @@ function Playground() {
           wordCount,
           authorEmail: userEmail,
           published: true,
-          forkedFrom: fork ? fork : null
+          forkedFrom: fork ? fork : null,
         };
 
         const res = await axios.post(
@@ -497,6 +498,8 @@ function Playground() {
           isClosable: true,
         });
 
+        getUserDetails(token);
+
         navigate("/dashboard");
       } else {
         const body = {
@@ -506,7 +509,7 @@ function Playground() {
           content: value,
           wordCount,
           published: true,
-          forkedFrom: fork ? fork : null
+          forkedFrom: fork ? fork : null,
         };
 
         const res = await axios.patch(
@@ -524,7 +527,9 @@ function Playground() {
           isClosable: true,
         });
       }
+      setWaiting(false);
     } catch (error) {
+      setWaiting(false);
       console.log(error);
       let msg = error.message;
       if (error.response && error.response.data) {
@@ -601,18 +606,51 @@ function Playground() {
                 Write for me
               </button>
             )}
-            <button
-              onClick={draft}
-              className="my-4 rounded-md md:w-[20%] lg:w-[20%] px-8 py-2 bg-emerald-500"
-            >
-              Save
-            </button>
-            <button
-              onClick={publish}
-              className="my-4 rounded-md md:w-[20%] lg:w-[20%] px-8 py-2 bg-emerald-500"
-            >
-              Publish
-            </button>
+            {
+              waitingSave ? (
+                <button
+                onClick={draft}
+                className="my-4 flex justify-center rounded-md md:w-[20%] lg:w-[20%] px-8 py-2 bg-emerald-500"
+              >
+                <div className="flex flex-row items-center">
+                  <Spinner></Spinner>
+                  <p className="">Save</p>
+                </div>
+              </button>
+              ): (
+                <button
+                onClick={draft}
+                className="my-4 flex justify-center rounded-md md:w-[20%] lg:w-[20%] px-8 py-2 bg-emerald-500"
+              >
+               <div className="flex flex-row items-center">
+                  <p className="">Save</p>
+                </div>
+              </button>
+                
+              )
+            }
+           
+            {waiting ? (
+              <button
+                onClick={publish}
+                className="my-4 flex justify-center rounded-md md:w-[20%] lg:w-[20%] px-8 py-2 bg-emerald-500"
+              >
+                <div className="flex flex-row items-center">
+                  <Spinner></Spinner>
+                  <p className="">Publish</p>
+                </div>
+              </button>
+            ) : (
+              <button
+                onClick={publish}
+                className="my-4 flex justify-center rounded-md md:w-[20%] lg:w-[20%] px-8 py-2 bg-emerald-500"
+              >
+                <div className="flex flex-row items-center">
+                  <p className="">Publish</p>
+                </div>
+              </button>
+            )}
+
             {/* <button
               onClick={publishPaid}
               className="my-4 rounded-md md:w-[20%] lg:w-[20%] px-8 py-2 bg-emerald-500"
@@ -627,11 +665,11 @@ function Playground() {
 
           <section className="md:mt-8 lg:mt-8 md:absolute lg:absolute md:top-4 lg:top-4">
             <div className="px-2 py-4 w-full">
-            <Stat>
-              <StatLabel>AI Points</StatLabel>
-              <StatNumber>{aiPoints ? aiPoints.toFixed(2) : 0.0}</StatNumber>
-            </Stat>
-          </div>
+              <Stat>
+                <StatLabel>AI Points</StatLabel>
+                <StatNumber>{aiPoints ? aiPoints.toFixed(2) : 0.0}</StatNumber>
+              </Stat>
+            </div>
 
             {/* <div className="px-2 py-4 w-full">
             <Stat>

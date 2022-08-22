@@ -305,6 +305,14 @@ function Navbar({ openDialog, tab }) {
             Write
           </h2>
         </Link>
+        <a
+          href="https://docs.google.com/document/d/1ea5LHL8YCwJRhDOca5cmW7PpQ259Q4hoiCpCptubkJc/edit?usp=sharing"
+          target="_blank"
+        >
+          <h2 className="hidden md:block lg:block text-xl font-medium font-center mx-2 text-emerald-500">
+            Whitepaper
+          </h2>
+        </a>
         {user && user.loggedIn && (
           <Link to="/dashboard">
             <h2 className="hidden md:block lg:block text-xl font-medium font-center mx-2 text-emerald-500">
@@ -325,7 +333,7 @@ function Navbar({ openDialog, tab }) {
             <button
               ref={btnRef}
               onClick={onOpen1}
-              className="rounded-full px-4 mr-4"
+              className="hidden md:block lg:block rounded-full px-4 mr-4"
             >
               <AiOutlineWallet fontSize="1.5rem" />
             </button>
@@ -358,7 +366,10 @@ function Navbar({ openDialog, tab }) {
                 </MenuButton>
                 <MenuList>
                   {!isLargerThan768 && (
+                    <>
                     <MenuItem onClick={openDashboard}>Dashboard</MenuItem>
+                    <MenuItem onClick={onOpen1}>Wallet</MenuItem>
+                    </>
                   )}
                   <Link to="/account">
                     <MenuItem>My Account</MenuItem>

@@ -33,7 +33,7 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlineEdit, AiOutlineFork, AiOutlineWallet } from "react-icons/ai";
 import { Tooltip } from "@chakra-ui/react";
 import Wallet from "../components/Wallet";
-import {getUserDetails} from "../actions/loadUser"
+import { getUserDetails } from "../actions/loadUser";
 
 function Article() {
   const toast = useToast();
@@ -161,6 +161,17 @@ function Article() {
   };
 
   const boostArticle = async () => {
+    if (parseInt(boostAmount) < 0) {
+      return toast({
+        position: "top",
+        title: "Tokens spent is 0!",
+        description: "",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+
     if (parseInt(boostAmount) > 100) {
       return toast({
         position: "top",
@@ -234,16 +245,18 @@ function Article() {
       <Navbar />
       <section className="w-full flex flex-row relative">
         <div className="fixed md:top-[20%] lg:top-[20%] bottom-4 left-4 md:left-16 lg:left-16 flex flex-row md:flex-col lg:flex-col items-center w-[40%] md:w-auto lg:w-auto justify-evenly">
-          {article.author === user.id && (
+          {article && article.author === user.id && article.published && (
             <Button onClick={onOpen1}>
               <span className="hidden md:inline lg:inline">Boost</span>
               &#x1F680;
             </Button>
           )}
-          <Button onClick={upVoteArticle}>
-            <span className="hidden md:inline lg:inline">Upvote</span>
-            &#x1F44D; {article && article.upvotes}
-          </Button>
+          {article.published && (
+            <Button onClick={upVoteArticle}>
+              <span className="hidden md:inline lg:inline">Upvote</span>
+              &#x1F44D; {article && article.upvotes}
+            </Button>
+          )}
         </div>
         <section className="my-16 px-8 md:px-72 lg:px-72">
           {article ? (
